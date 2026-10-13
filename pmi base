@@ -1,1 +1,187 @@
 
+#include <stdio.h>
+#include <stdlib.h>
+
+//Miembro 3: Main, Menú e Interfaz (El Frontend)
+//Se encarga de armar el main.c (Requisito f) y programar toda la lógica visual y de negocio del menú, conectando el trabajo del Miembro 1 y 2.
+//
+//Gestión de Agenda:
+//
+//Funcionalidad (b): Busca fecha libre en agenda.
+
+//Funcionalidad (d): Busca fecha ocupada en agenda.
+//
+//Gestión de Pacientes:
+//
+//Funcionalidad (n): Cargar paciente por teclado.
+
+//Funcionalidad (ñ): Eliminar paciente por teclado (validando que no tenga turnos).
+
+//Funcionalidad (p): Mostrar datos de un paciente según DNI.
+
+//Funcionalidad (q): Mostrar todos los pacientes.
+//
+//Gestión de Turnos:
+//
+//Funcionalidad (a): Solicitar un turno (lógica de buscar DNI, asignar índice de agenda e insertar en lista).
+
+//Funcionalidad (c): Mostrar turnos de un paciente por DNI.
+
+//Funcionalidad (f): Mostrar datos del turno buscado.
+
+//Funcionalidad (g): Confirmar el turno (cambiar estado).
+
+//Funcionalidad (h): Cancelar turno (cambiar estado en lista, liberar agenda e invocar a la función j del Miembro 2).
+
+//Funcionalidad (i): Próximo paciente (cambiar de confirmado a atendido o cancelado).
+
+//Funcionalidad (k): Mostrar todos los turnos (paginado).
+//
+//Recursividad y Reportes:
+//
+//Funcionalidad (l): Mostrar turnos asignados por mes (Recursiva).
+
+//Funcionalidad (m): Contar turnos atendidos por día y mes (Recursiva).
+
+//Funcionalidad (r): Calcular el monto ingresado en un mes dado.
+//
+
+void main()
+{
+
+    //Funcionalidad (o): Cargar la agenda automáticamente al iniciar (No es opción del menú).
+    
+    
+    int op1,op2 = -1;
+    do {
+            printf("\n==== SISTEMA DE TURNOS MEDICOS 2026 ====\n\n");
+            printf("(1). Gestión de Agenda: \n");
+            printf("(2). Gestión de Pacientes: \n");
+            printf("(3). Gestión de Turnos: \n");
+            printf("(4). Recursividad y Reportes: \n");
+            printf("(0). Salir\n");
+            printf("Selecione una opcion: ");
+            scanf("%d",&op1);//opcion de menu
+            printf("\n");
+
+            switch(op1){ //switch del primer menu
+
+
+    case 1:{ do { // =========== MENU DE GESTION DE AGENDA ===========
+            printf("=== MENU ===\n== Gestión de Agenda == \n\n");
+        printf("(1). Busca Fecha libre en la agenda\n");//Funcionalidad (b): Busca fecha libre en agenda.
+        printf("(2). Busca fecha ocupada en agenda \n");//Funcionalidad (d): Busca fecha ocupada en agenda.
+        printf("(0). Salir \n");
+        printf("Elige la Opcion: ");
+        scanf("%d",&op2);
+        printf(" \n");
+
+            switch(op2){
+            case 1:{}
+            case 2:{}
+            case 0:{}
+            default:;
+            }
+        }while (op2!=0);break;}
+
+        //=========== =========== =========== =========== =========== =========== =========== =========== =========== =========== //
+
+    case 2:{    do { // =========== MENU DE GESTION DE PACIENTE ===========
+    //Funcionalidad (n): Cargar paciente por teclado.
+    //Funcionalidad (ñ): Eliminar paciente por teclado (validando que no tenga turnos).
+    //Funcionalidad (p): Mostrar datos de un paciente según DNI.
+    //Funcionalidad (q): Mostrar todos los pacientes.
+
+        printf("=== MENU ===\n== Gestión de Pacientes == \n\n");
+        printf("(1). Cargar paciente por teclado \n");
+        printf("(2). Eliminar paciente por teclado \n");
+        printf("(3). Mostrar datos de un paciente según DNI\n");
+        printf("(4). Mostrar todos los pacientes\n");
+        printf("(0). Salir \n");
+        printf("Elige la Opcion: ");
+        scanf("%d",&op2);
+        printf(" \n");
+
+        switch(op2){
+        case 1:{}
+        case 2:{}
+        case 3:{}
+        case 4:{}
+        case 0:{}
+
+        }
+
+        }while (op2!=0); break;}
+
+        //=========== =========== =========== =========== =========== =========== =========== =========== =========== //
+
+    case 3:{do { // =========== MENU DE GESTION DE TURNOS ===========
+//Funcionalidad (a): Solicitar un turno (lógica de buscar DNI, asignar índice de agenda e insertar en lista).
+//Funcionalidad (c): Mostrar turnos de un paciente por DNI.
+//Funcionalidad (f): Mostrar datos del turno buscado.
+//Funcionalidad (g): Confirmar el turno (cambiar estado).
+//Funcionalidad (h): Cancelar turno (cambiar estado en lista, liberar agenda e invocar a la función j del Miembro 2).
+//Funcionalidad (i): Próximo paciente (cambiar de confirmado a atendido o cancelado).
+//Funcionalidad (k): Mostrar todos los turnos (paginado).
+
+        printf("=== MENU ===\n== Gestión de Turnos == \n\n");
+        printf("(1). Solicitar un turno\n");
+        printf("(2). Mostrar turnos de un paciente por DNI\n");
+        printf("(3). Mostrar datos del turno buscado.\n");
+        printf("(4). Confirmar el turno \n");
+        printf("(5). Cancelar turno\n");
+        printf("(6). Próximo paciente\n");
+        printf("(7). Mostrar todos los turnos\n");
+        printf("(0). Salir \n");
+        printf("Elige la Opcion: ");
+        scanf("%d",&op2);
+        printf(" \n");
+
+        switch(op2){
+            case 1:{}
+            case 2:{}
+            case 3:{}
+            case 4:{}
+            case 5:{}
+            case 6:{}
+            case 7:{}
+            case 0:{}
+            default:;
+            }
+        }while (op2!=0); break;}
+
+        // ===========  =========== =========== =========== =========== =========== =========== =========== =========== //
+
+    case 4:{do {  // =========== RECURSIVIDAD Y REPORTES ===========
+
+        //Funcionalidad (l): Mostrar turnos asignados por mes (Recursiva).
+        //Funcionalidad (m): Contar turnos atendidos por día y mes (Recursiva).
+        //Funcionalidad (r): Calcular el monto ingresado en un mes dado.
+
+        printf("=== MENU ===\n== Recursividad y Reportes == \n\n");
+        printf("(1). Mostrar turnos asignados por mes\n");
+        printf("(2). Contar turnos atendidos por día y mes\n");
+        printf("(3). Calcular el monto ingresado en un mes dado\n");
+        printf("(0). Salir \n");
+        printf("Elige la Opcion: ");
+        scanf("%d",&op2);
+        printf(" \n");
+
+        switch(op2){
+            case 1:{}
+            case 2:{}
+            case 3:{}
+            case 0:{}
+            default:;
+            }
+        }while (op2!=0); break;}
+
+        //=========== =========== =========== =========== =========== =========== =========== =========== =========== //
+
+    case 0:{break;}
+
+    default:printf("Opcion invalida.\n");
+            }//switch del primer menu
+
+    }while (op1!=0);//primer do while
+}
