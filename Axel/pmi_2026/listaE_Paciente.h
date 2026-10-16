@@ -2,10 +2,11 @@
 #define LISTAE_PACIENTE_H_INCLUDED
 #include <string.h>
 #include <malloc.h>
+#include "paciente.h"
 #define MAX 3       //esta asi para las pruebas, debemos cambiar
 
 typedef struct{
-    int paciente[MAX];
+    Paciente paciente[MAX];
     int cursor;
     int ultimo;
 }ListaPacientesE;
@@ -39,7 +40,7 @@ void copy_listaE(ListaPacientesE l){
     return l->paciente[l->cursor]
 }
 
-void insert_listaE(ListaPacientesE *l, int x){
+void insert_listaE(ListaPacientesE *l, paciente x){
     if (isempty_listaE(l)){
         l->cursor++;
         l->ultimo++;
