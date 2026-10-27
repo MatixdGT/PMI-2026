@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1792165647 source:e:\pmi2026\pmi bases\proyecto-integrador\main.c
+	<stdio.h>
+	<stdlib.h>
+	<strings.h>
+	<malloc.h>
+	"paciente.h"
+	"turno.h"
+	"fecha.h"
+	"paciente.h"
+
+1791945406 e:\pmi2026\pmi bases\proyecto-integrador\paciente.h
+	<string.h>
+
+1792166165 e:\pmi2026\pmi bases\proyecto-integrador\turno.h
+	"paciente.h"
+	"fecha.h"
+
+1792166298 e:\pmi2026\pmi bases\proyecto-integrador\fecha.h
+
