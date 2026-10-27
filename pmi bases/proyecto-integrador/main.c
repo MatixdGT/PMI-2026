@@ -9,7 +9,7 @@
 #define Maxarr 390
 
 // ====================================================================
-// FUNCIONALIDAD (o): Cargar la agenda automáticamente al iniciar.
+// FUNCIONALIDAD (o): Cargar la agenda automÃ¡ticamente al iniciar.
 // Crea los 390 turnos de 30 min desde 1/11/2026 8:00hs hasta 31/12/2026.
 // ====================================================================
 void inicializar_agenda(Fecha agenda[]) {
@@ -26,11 +26,7 @@ void inicializar_agenda(Fecha agenda[]) {
                         // 1 = Libre
                         setFecha(&agenda[i], dia, mes, 2026, hora, minuto, 1);
                         i++;
-                    }
-                }
-            }
-        }
-    }
+    }}}}}
     printf("-> [SISTEMA] Agenda inicializada con %d turnos libres.\n", i);
 }
 
@@ -46,8 +42,8 @@ void buscar_fecha_libre(Fecha agenda[]) {
 
     printf("\n--- TURNOS LIBRES EL %02d/%02d/2026 ---\n", dia_buscado, mes_buscado);
     int encontrados = 0;
-
-    for (int i = 0; i < Maxarr; i++) {
+    int i;
+    for (i = 0; i < Maxarr; i++) {
         if (getMes(agenda[i]) == mes_buscado &&
             getDia(agenda[i]) == dia_buscado &&
             getDisponible(agenda[i]) == 1) {
@@ -62,13 +58,56 @@ void buscar_fecha_libre(Fecha agenda[]) {
         printf("No hay turnos libres para la fecha seleccionada.\n");
     }
 }
+// ==========================================================================================
+// FUNCIONALIDAD (d): Busca fecha Ocupada en agenda segun mes y que pase el id y las horas
+// ==========================================================================================
+
+void buscar_fecha_Ocupada(Fecha agenda[]) {
+    int mes_buscado;
+    printf("Ingrese el MES (11 o 12): ");
+    scanf("%d", &mes_buscado);
+
+    printf("\n--- TURNOS OCUPADOS EL %02d/2026 ---\n", mes_buscado);
+    int encontrados = 0;
+    int i;
+    for (i = 0; i < Maxarr; i++) {
+        if (getMes(agenda[i]) == mes_buscado && getDisponible(agenda[i]) == 0) {
+
+            printf("ID Turno: %d | Horario: %02d:%02d hs\n", i, getHora(agenda[i]), getMinuto(agenda[i]));
+            encontrados++;
+        }
+    }
+
+    if (encontrados == 0) {
+        printf("No hay turnos Ocupados para el mes seleccionada.\n");
+    }
+}
+
+//Cargar paciente por teclado
+void Cargar_Paciente()
+
+
+//==========================================================================================
+//funcion para meter una fecha ocupada o varias cosas para pruebas
+//==========================================================================================
+//void meter(Fecha Agenda[]){
+//int i;i = 8;
+//Fecha hola = getFechaCompleta(Agenda[i]);
+//printf("valores %d/ fecha %d/%d/%d/%d \n\n",i,hola.mes,hola.dia,hola.hora,hola.minuto);
+//setDisponible(&Agenda[8],0);
+//setDisponible(&Agenda[10],0);
+//setDisponible(&Agenda[54],0);
+//setDisponible(&Agenda[100],0);
+//}
 
 int main() {
     Fecha AGENDA[Maxarr];
-
+    ListaPacientesE LPacientes;
+    ListaTurnoVO LTurnoVO;
     // Tareas OBLIGATORIAS al arrancar el programa
     inicializar_agenda(AGENDA);
-
+    init_listaE(&LPacientes);
+    init_listaVO(&LTurnoVO);
     int op1;
     int op2 = -1;
 
@@ -96,10 +135,11 @@ int main() {
 
                     switch(op2) {
                         case 1:
-                            buscar_fecha_libre(AGENDA); // ¡Tu nueva funcion implementada!
+                            buscar_fecha_libre(AGENDA); // Aca ira la funcionalidad (b)
                             break;
                         case 2:
-                            // Aca ira la funcionalidad (d)
+                            //meter(AGENDA);
+                            buscar_fecha_Ocupada(AGENDA);// Aca ira la funcionalidad (d)
                             break;
                         case 0:
                             break;
@@ -123,7 +163,8 @@ int main() {
                     printf(" \n");
 
                     switch(op2){
-                        case 1: break;
+                        case 1:
+                             break;
                         case 2: break;
                         case 3: break;
                         case 4: break;
