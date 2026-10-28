@@ -42,7 +42,7 @@ int getId(turno t) {
     return t.id_turno;
 }
 
-long getPaciente(turno t) {
+long getPaciente_dni(turno t) {
     return t.dni_paciente;
 }
 
