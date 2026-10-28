@@ -10,21 +10,26 @@ typedef struct{
 } ListaPacientesE;
 
 void init_listaE(ListaPacientesE *l){ l->cursor = 0; l->ultimo = -1; }
+
 void forward_listaE(ListaPacientesE *l){ l->cursor++; }
+
 void reset_listaE(ListaPacientesE *l){ l->cursor = 0; }
+
 
 // CORRECCION: Todas estas eran void pero retornaban un valor. Ahora son int.
 int isfull_listaE(ListaPacientesE l){ return (l.ultimo == MAX-1); }
+
 int isempty_listaE(ListaPacientesE l){ return (l.ultimo == -1); }
+
 int isOos_listaE(ListaPacientesE l){ return (l.cursor > l.ultimo); }
 
 Paciente copy_listaE(ListaPacientesE l){ return l.paciente[l.cursor]; }
 
 // CORRECCION: Al ser lista desordenada, se inserta siempre al final.
-void insert_listaE(ListaPacientesE *l, Paciente x){
+void insert_listaE(ListaPacientesE *l, Paciente p){
     if (l->ultimo < MAX - 1) {
         l->ultimo++;
-        l->paciente[l->ultimo] = x;
+        l->paciente[l->ultimo] = p;
     }
 }
 
