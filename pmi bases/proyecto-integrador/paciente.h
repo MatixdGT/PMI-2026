@@ -26,13 +26,23 @@ void setOsocial(Paciente *p, int nuevoOsocial) {
     p->osocial = nuevoOsocial;
 }
 
-// FUNCIONES GET (Se retorna el puntero directo sin usar malloc)
-const char* getNombre(const Paciente *p) {
-    return p->nombre;
+// FUNCIONES GET
+char* getNombre(Paciente p) {
+    char *nom = (char*)malloc(strlen(p.nombre) + 1);
+    if (nom == NULL) {
+        exit(1);
+    }
+    strcpy(nom, p.nombre);
+    return nom;
 }
 
-const char* getApellido(const Paciente *p) {
-    return p->apellido;
+char* getApellido(Paciente p) {
+    char *app = (char*)malloc(strlen(p.apellido) + 1);
+    if (app == NULL) {
+        exit(1);
+    }
+    strcpy(app, p.apellido);
+    return app;
 }
 
 long getDni(Paciente p) {
