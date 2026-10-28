@@ -16,7 +16,7 @@ void initFecha(Fecha *f) {
     f->mes = 0;
     f->anio = 2026;
     f->hora = 0;
-    f->minuto = 0;              
+    f->minuto = 0;
     f->disponible = 1;
 }
 
