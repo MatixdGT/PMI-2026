@@ -4,7 +4,7 @@
 #include "turno.h"
 
 typedef struct nodo{
-    turno vipd;
+    Turno vipd;
     struct nodo *siguiente;
 } Nodo;
 
@@ -34,7 +34,7 @@ void forward_listaVO(ListaTurnoVO *l){
         l->cursor = l->cursor->siguiente;
     }
 }
-turno copy_listaVO(ListaTurnoVO *l){
+Turno copy_listaVO(ListaTurnoVO *l){
     return l->cursor->vipd;
 }
 void supress_listaVO(ListaTurnoVO *l){
@@ -52,7 +52,7 @@ void supress_listaVO(ListaTurnoVO *l){
     free(eliminar); // Faltaba liberar la memoria dinamica
 }
 
-void insert_listaVO(ListaTurnoVO *l, turno t){
+void insert_listaVO(ListaTurnoVO *l, Turno t){
     Nodo* nuevo = (Nodo*)malloc(sizeof(Nodo));
     if (nuevo == NULL) exit(1);
 
