@@ -97,16 +97,16 @@ void cargar_paciente(ListaPacientesE *lp) {
         printf("Error: La lista de pacientes esta llena.\n");
         return;
     }
-    
+
     Paciente nuevoPac;
     char nombreax[20], apellidoax[20];
     long dniax;
     int osocialax;
-    
+
     printf("\n--- CARGAR NUEVO PACIENTE ---\n");
     getchar();
     printf("Ingrese el Nombre: ");
-    scanf(" %[^\n]s", nombreax); 
+    scanf(" %[^\n]s", nombreax);
     getchar();
     printf("Ingrese el Apellido: ");
     scanf(" %[^\n]s", apellidoax);
@@ -117,67 +117,68 @@ void cargar_paciente(ListaPacientesE *lp) {
         printf("DNI invalido. Ingrese nuevamente: ");
         scanf("%ld", &dniax);
     }
-    
+
     do {
         printf("¿Tiene Obra Social? (1=Si, 0=No): ");
         scanf("%d", &osocialax);
     } while (osocialax != 0 && osocialax != 1);
 
-    
+
     setNombre(&nuevoPac, nombreax);
     setApellido(&nuevoPac, apellidoax);
     setDni(&nuevoPac, dniax);
     setOsocial(&nuevoPac, osocialax);
-    
-    insert_listaE(lp, nuevoPac); 
+
+    insert_listaE(lp, nuevoPac);
     printf("¡Paciente cargado con exito!\n");
+
 }
 
 // ==========================================================================================
 // Eliminar paciente por teclado (Validando que no tenga turnos)
 // ==========================================================================================
 void eliminar_paciente(ListaPacientesE *lp, ListaTurnoVO *lt) {
-    if (isempty_listaE(*lp)) { 
+    if (isempty_listaE(*lp)) {
         printf("No hay pacientes registrados para eliminar.\n");
         return;
     }
-    
+
     long dni_buscado;
     printf("Ingrese el DNI del paciente a eliminar: ");
     scanf("%ld", &dni_buscado);
-    
+
     int encontrado = 0;
-    reset_listaE(lp); 
-    while (!isOos_listaE(*lp)) { 
-        Paciente p = copy_listaE(*lp); 
-        if (getDni(p) == dni_buscado) { 
+    reset_listaE(lp);
+    while (!isOos_listaE(*lp)) {
+        Paciente p = copy_listaE(*lp);
+        if (getDni(p) == dni_buscado) {
             encontrado = 1;
             break;
         }
-        forward_listaE(lp); 
+        forward_listaE(lp);
     }
-    
+
     if (encontrado == 0) {
         printf("El paciente con DNI %ld no existe en el sistema.\n", dni_buscado);
         return;
     }
-    
+
     // Validacion cruzada: revisar si el DNI esta en la lista de turnos
     int tiene_turnos = 0;
-    reset_listaVO(lt); 
-    while (!isOos_listaVO(lt)) { 
-        turno t = copy_listaVO(lt); 
-        if (getPaciente_dni(t) == dni_buscado) { 
+    reset_listaVO(lt);
+    while (!isOos_listaVO(lt)) {
+        Turno t = copy_listaVO(lt);
+        if (getPaciente_dni(t) == dni_buscado) {
             tiene_turnos = 1;
             break;
         }
-        forward_listaVO(lt); 
+        forward_listaVO(lt);
     }
-    
+
     if (tiene_turnos == 1) {
         printf("ERROR: No se puede eliminar el paciente. Tiene turnos pendientes o en historial.\n");
     } else {
-        supress_listaE(lp); 
+        supress_listaE(lp);
         printf("Paciente eliminado exitosamente.\n");
     }
 }
@@ -185,41 +186,41 @@ void eliminar_paciente(ListaPacientesE *lp, ListaTurnoVO *lt) {
 // ==========================================================================================
 // Mostrar datos de un paciente segun DNI
 // ==========================================================================================
-void mostrar_paciente_dni(ListaPacientesE lp) { 
-    if (isempty_listaE(lp)) { 
+void M_datos_paciente_dni(ListaPacientesE lp) {
+    if (isempty_listaE(lp)) {
         printf("No hay pacientes cargados.\n");
         return;
     }
-    
+
     long dni_buscado;
     printf("Ingrese el DNI a buscar: ");
     scanf("%ld", &dni_buscado);
-    
+
     int encontrado = 0;
     reset_listaE(&lp);
-    while (!isOos_listaE(lp)) { 
-        Paciente p = copy_listaE(lp); 
-        if (getDni(p) == dni_buscado) { 
-            
-    
-            char *nom = getNombre(p); 
+    while (!isOos_listaE(lp)) {
+        Paciente p = copy_listaE(lp);
+        if (getDni(p) == dni_buscado) {
+
+
+            char *nom = getNombre(p);
             char *ape = getApellido(p);
-            
+
             printf("\n--- DATOS DEL PACIENTE ---\n");
             printf("DNI: %ld\n", getDni(p));
             printf("Nombre: %s %s\n", nom, ape);
-            printf("Obra Social: %s\n", getOsocial(p) == 1 ? "SI (1)" : "NO (0)"); 
-            
-           
+            printf("Obra Social: %s\n", getOsocial(p) == 1 ? "SI (1)" : "NO (0)");
+
+
             free(nom);
             free(ape);
-            
+
             encontrado = 1;
             break;
         }
-        forward_listaE(&lp); 
+        forward_listaE(&lp);
     }
-    
+
     if (encontrado == 0) {
         printf("No se encontro ningun paciente con el DNI %ld.\n", dni_buscado);
     }
@@ -228,34 +229,172 @@ void mostrar_paciente_dni(ListaPacientesE lp) {
 // ==========================================================================================
 // Mostrar todos los pacientes
 // ==========================================================================================
-void mostrar_todos_pacientes(ListaPacientesE lp) {
-    if (isempty_listaE(lp)) { 
+void mostrar_todos_los_pacientes(ListaPacientesE lp) {
+    if (isempty_listaE(lp)) {
         printf("No hay pacientes cargados.\n");
         return;
     }
-    
+
     printf("\n--- LISTA COMPLETA DE PACIENTES ---\n");
-    reset_listaE(&lp); 
+    reset_listaE(&lp);
     int contador = 1;
-    
-    while (!isOos_listaE(lp)) { 
-        Paciente p = copy_listaE(lp); 
-        
-       
+
+    while (!isOos_listaE(lp)) {
+        Paciente p = copy_listaE(lp);
+
+
         char *nom = getNombre(p);
         char *ape = getApellido(p);
-        
-        printf("%d. DNI: %ld | Nombre: %s %s | Obra Social: %s\n", 
-               contador, getDni(p), nom, ape, getOsocial(p) == 1 ? "SI" : "NO"); 
-               
-        
+
+        printf("%d. DNI: %ld | Nombre: %s %s | Obra Social: %s\n",
+               contador, getDni(p), nom, ape, getOsocial(p) == 1 ? "SI" : "NO");
+
+
         free(nom);
         free(ape);
-        
+
         forward_listaE(&lp);
         contador++;
     }
 }
+
+// ==========================================================================================
+// Solicitar un turno
+// ==========================================================================================
+void solicitar_turno(ListaTurnoVO *lt, ListaPacientesE *lp, Fecha agenda[]) {
+    Fecha Tfec;
+    long dni;
+    int mutual_ax;
+    float monto_ax;
+
+    printf("\n--- SOLICITAR TURNO ---\n");
+    printf("Ingrese DNI del paciente: ");
+    scanf("%ld", &dni);
+
+    // Verificar si esta en la lista de pacientes
+    int existe = 0;
+    reset_listaE(lp);
+    while (!isOos_listaE(*lp)) {
+        Paciente p = copy_listaE(*lp);
+        if (getDni(p) == dni) {
+            existe = 1;
+            break;
+        }
+        forward_listaE(lp);
+    }
+
+    if (!existe) {
+        printf("El paciente no esta registrado. Carguelo a continuacion:\n");
+        cargar_paciente(lp);
+    }
+
+    // Llamamos a la funcion que pide la fecha deseada (pasando por puntero)
+    carga_fecha(&Tfec);
+
+    // BUSCAR ID PARA COLOCAR EN TURNO
+    int id_encontrado = -1;
+    for (int i = 0; i < Maxarr; i++) {
+        if ((getMes(agenda[i]) == Tfec.mes) && (getDia(agenda[i]) == Tfec.dia) &&
+            (getHora(agenda[i]) == Tfec.hora) && (getMinuto(agenda[i]) == Tfec.minuto)) {
+
+            if (getDisponible(agenda[i]) == 1) {
+                id_encontrado = i;
+            } else {
+                printf("Error: Ese horario ya esta ocupado por otro paciente.\n");
+                return;
+            }
+            break;
+        }
+    }
+
+    if (id_encontrado == -1) {
+        printf("Error: La fecha u horario ingresado no existe en la agenda de la clinica.\n");
+        return;
+    }
+
+    // CONTROLES FALTANTES: Pedir Mutual y Monto
+    do {
+        printf("Ingrese la Mutual (1.OSDE, 2.PAMI, 3.OCECAC, 4.DOSPU): ");
+        scanf("%d", &mutual_ax);
+    } while (mutual_ax < 1 || mutual_ax > 4);
+
+    printf("Ingrese el monto a abonar: $");
+    scanf("%f", &monto_ax);
+    while (monto_ax < 0) {
+        printf("Error. Ingrese un monto valido: $");
+        scanf("%f", &monto_ax);
+    }
+
+    // CREAR EL TURNO
+    turno nuevoTurno; // (Corregido a minuscula)
+    setId(&nuevoTurno, id_encontrado);
+    setPaciente(&nuevoTurno, dni);
+    // Usamos los datos guardados en Tfec (Corregido)
+    setFechaTurno(&nuevoTurno, Tfec.dia, Tfec.mes, 2026, Tfec.hora, Tfec.minuto, 0);
+    setEstado(&nuevoTurno, 1); // 1 = Solicitado
+    setMonto(&nuevoTurno, monto_ax);
+    setMutual(&nuevoTurno, mutual_ax);
+
+    // Ocupamos el lugar en la agenda
+    setDisponible(&agenda[id_encontrado], 0);
+
+    insert_listaVO(lt, nuevoTurno);
+    printf("\n¡Turno solicitado con exito! Asignado ID Turno: %d\n", id_encontrado);
+}
+
+
+// ==========================================================================================
+// Función auxiliar para cargar fecha por teclado
+// ==========================================================================================
+void carga_fecha(Fecha *fecha_turno) {
+    int mes, dia, hora, minuto;
+    initFecha(fecha_turno);
+
+    printf("\n--- INGRESO DE FECHA DESEADA ---\n");
+    do {
+        printf("Ingrese mes (11 para Noviembre o 12 para Diciembre): ");
+        scanf("%d", &mes);
+    } while (mes != 11 && mes != 12);
+    setMes(fecha_turno, mes);
+
+    do {
+        printf("Ingrese dia: ");
+        scanf("%d", &dia);
+
+
+        if ((mes == 11 && (dia >= 1 && dia <= 30)) || (mes == 12 && (dia >= 1 && dia <= 31))) {
+            setDia(fecha_turno, dia);
+            break;
+        } else {
+            printf("Error: Noviembre tiene 30 dias y Diciembre tiene 31 dias.\n");
+        }
+    } while (1);
+
+    do {
+        printf("Ingrese hora (entre las 8 y las 12): ");
+        scanf("%d", &hora);
+    } while (hora < 8 || hora > 12);
+    setHora(fecha_turno, hora);
+
+    do {
+        printf("Ingrese minuto (0 o 30): ");
+        scanf("%d", &minuto);
+        if (hora == 12 && minuto == 30) {
+
+            break;
+        }
+        if (hora == 12 && minuto > 30) {
+            printf("Error. El ultimo turno posible es 12:30 hs.\n");
+            minuto = -1;
+        }
+    } while (minuto != 0 && minuto != 30);
+    setMinuto(fecha_turno, minuto);
+
+    setDisponible(fecha_turno, 0);
+
+
+}
+
 
 
 
@@ -263,7 +402,7 @@ int main(){
     Fecha AGENDA[Maxarr];
     ListaPacientesE LPacientes;
     ListaTurnoVO LTurnoVO;
-    
+
     // Tareas OBLIGATORIAS al arrancar el programa
     inicializar_agenda(AGENDA);
     init_listaE(&LPacientes);
@@ -325,10 +464,10 @@ int main(){
                     printf(" \n");
 
                     switch(op2){
-                        case 1:Cargar_Paciente(&LPacientes);break;
-                        case 2:eliminar_paciente(&LPacientes, &LTurnoVO); break;
-                        case 3:M_datos_paciente_dni(LPacientes);break;
-                        case 4:Mostrar_todos_los_pacientes(LPacientes);break;
+                        case 1:{cargar_paciente(&LPacientes);break;}
+                        case 2:{eliminar_paciente(&LPacientes, &LTurnoVO); break;}
+                        case 3:{M_datos_paciente_dni(LPacientes);break;}
+                        case 4:{mostrar_todos_los_pacientes(LPacientes);break;}
                         case 0: break;
                     }
                 } while (op2 != 0);
@@ -351,7 +490,8 @@ int main(){
                     printf(" \n");
 
                     switch(op2) {
-                        case 1: break;
+
+                        case 1: solicitar_turno(&LTurnoVO,&LPacientes,AGENDA); break;
                         case 2: break;
                         case 3: break;
                         case 4: break;
@@ -396,6 +536,6 @@ int main(){
         }
     } while (op1 != 0);
  //free(LPacientes);
- free(LTurnoVO);
+// free(LTurnoVO);
     return 0;
 }
