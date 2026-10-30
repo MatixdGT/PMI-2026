@@ -9,7 +9,7 @@
 #define Maxarr 390
 
 // ====================================================================
-// FUNCIONALIDAD (o): Cargar la agenda automáticamente al iniciar.
+// FUNCIONALIDAD (o): Cargar la agenda automÃ¡ticamente al iniciar.
 // Crea los 390 turnos de 30 min desde 1/11/2026 8:00hs hasta 31/12/2026.
 // ====================================================================
 void inicializar_agenda(Fecha agenda[]) {
@@ -119,7 +119,7 @@ void cargar_paciente(ListaPacientesE *lp) {
     }
 
     do {
-        printf("¿Tiene Obra Social? (1=Si, 0=No): ");
+        printf("Â¿Tiene Obra Social? (1=Si, 0=No): ");
         scanf("%d", &osocialax);
     } while (osocialax != 0 && osocialax != 1);
 
@@ -130,7 +130,7 @@ void cargar_paciente(ListaPacientesE *lp) {
     setOsocial(&nuevoPac, osocialax);
 
     insert_listaE(lp, nuevoPac);
-    printf("¡Paciente cargado con exito!\n");
+    printf("Â¡Paciente cargado con exito!\n");
 
 }
 
@@ -283,13 +283,14 @@ void solicitar_turno(ListaTurnoVO *lt, ListaPacientesE *lp, Fecha agenda[]) {
         printf("El paciente no esta registrado. Carguelo a continuacion:\n");
         cargar_paciente(lp);
     }
-    carga_fecha(Tfec);
+    carga_fecha(&Tfec);
     //BUSCAR ID PARA COLOCAR EN TURNO
 
     int id_encontrado = -1;
     int i;
+    //printf("fecha %d/%d \n\n\n",Tfec.mes,Tfec.dia);
     for ( i = 0; i < Maxarr; i++) {
-        if ((getMes(agenda[i]) == mes) && (getDia(agenda[i]) == dia) && (getHora(agenda[i]) == hora) &&(getMinuto(agenda[i]) == minuto)) {
+        if ((getMes(agenda[i]) == Tfec.mes) && (getDia(agenda[i]) == Tfec.dia) && (getHora(agenda[i]) == Tfec.hora) &&(getMinuto(agenda[i]) == Tfec.minuto)) {
 
             if (getDisponible(agenda[i]) == 1) {
                 id_encontrado = i;
@@ -320,12 +321,13 @@ void solicitar_turno(ListaTurnoVO *lt, ListaPacientesE *lp, Fecha agenda[]) {
 
     insert_listaVO(lt, nuevoTurno);
     printf(" Turno solicitado con exito! Asignado ID Turno: %d\n", id_encontrado);
+
 }
 
 
-void carga_fecha (Fecha fecha_turno){
+void carga_fecha(Fecha *fecha_turno){
 int mes, dia, hora, minuto, disponible;
-initFecha(&fecha_turno);
+initFecha(fecha_turno);
 
     printf("Ingrese la fecha del turno\n");
 do {
@@ -334,14 +336,14 @@ do {
     }
 while (mes != 11 && mes != 12);
 
-    setMes(&fecha_turno, mes);
+    setMes(fecha_turno, mes);
 
 do {
     printf("Ingrese dia\n");
     scanf("%d", &dia);
         if ((mes==11 &&(dia>=1 || dia<=30)) || (mes==12 && (dia>=1 || dia<=31)))
         {
-            setDia(&fecha_turno, dia);
+            setDia(fecha_turno, dia);
         }
         else
         {
@@ -355,7 +357,7 @@ do {
     scanf("%d", &hora);
         if (hora>=8 && hora<=12)
         {
-            setHora(&fecha_turno, hora);
+            setHora(fecha_turno, hora);
         }
         else
         {
@@ -370,12 +372,12 @@ do {
     }
 while (minuto != 0 && minuto != 30);
 
-    setMinuto(&fecha_turno, minuto);
+    setMinuto(fecha_turno, minuto);
 
 disponible = 0;
-setDisponible(&fecha_turno, disponible);
+setDisponible(fecha_turno, disponible);
 
-return;
+return getFechaCompleta(*fecha_turno);
 }
 
 
