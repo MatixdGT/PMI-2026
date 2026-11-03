@@ -1,0 +1,3 @@
+45123456 Roberto Gomez 1
+32987654 Ana_Maria Silva 0
+12345678 Carlos Tevez 1
