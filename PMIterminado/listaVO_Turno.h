@@ -14,7 +14,6 @@ typedef struct{
     Nodo *aux;
 } ListaTurnoVO;
 
-// Modificadores (Reciben por referencia con *)
 void init_listaVO(ListaTurnoVO *l){
     l->acceso = NULL; l->aux = NULL; l->cursor = NULL;
 }
@@ -28,16 +27,11 @@ void forward_listaVO(ListaTurnoVO *l){
     }
 }
 
-// Observadores (Reciben por valor para evitar errores de tipo en CB 16.01)
-int isempty_listaVO(ListaTurnoVO l){
-    return (l.acceso == NULL);
-}
-int isOos_listaVO(ListaTurnoVO l){
-    return (l.cursor == NULL);
-}
-Turno copy_listaVO(ListaTurnoVO l){
-    return l.cursor->vipd;
-}
+// Observadores por valor (CB 16.01)
+int isfull_listaVO(ListaTurnoVO l){ return 0; } // Requerido por el PDF
+int isempty_listaVO(ListaTurnoVO l){ return (l.acceso == NULL); }
+int isOos_listaVO(ListaTurnoVO l){ return (l.cursor == NULL); }
+Turno copy_listaVO(ListaTurnoVO l){ return l.cursor->vipd; }
 
 void supress_listaVO(ListaTurnoVO *l){
     Nodo *eliminar;
@@ -51,23 +45,42 @@ void supress_listaVO(ListaTurnoVO *l){
         l->aux->siguiente = l->cursor->siguiente;
         l->cursor = l->cursor->siguiente;
     }
-    free(eliminar);
+    free(eliminar); 
 }
 
+// Insercion ORDENADA de menor a mayor (por ID_Turno, que equivale a Fecha cronologica)
 void insert_listaVO(ListaTurnoVO *l, Turno t){
     Nodo* nuevo = (Nodo*)malloc(sizeof(Nodo));
     if (nuevo == NULL) exit(1);
-
     nuevo->vipd = t;
+    nuevo->siguiente = NULL;
 
-    if(l->cursor == l->acceso){
-        nuevo->siguiente = l->cursor;
+    if (l->acceso == NULL) {
         l->acceso = nuevo;
         l->cursor = nuevo;
-    } else {
-        nuevo->siguiente = l->cursor;
-        l->cursor = nuevo;
-        l->aux->siguiente = nuevo;
+        l->aux = NULL;
+        return;
     }
+
+    if (getId(t) < getId(l->acceso->vipd)) {
+        nuevo->siguiente = l->acceso;
+        l->acceso = nuevo;
+        l->cursor = nuevo;
+        l->aux = NULL;
+        return;
+    }
+
+    Nodo *actual = l->acceso;
+    Nodo *anterior = NULL;
+    while (actual != NULL && getId(actual->vipd) < getId(t)) {
+        anterior = actual;
+        actual = actual->siguiente;
+    }
+
+    nuevo->siguiente = actual;
+    if (anterior != NULL) anterior->siguiente = nuevo;
+    
+    l->cursor = nuevo;
+    l->aux = anterior;
 }
 #endif // LISTAVO_TURNO_H_INCLUDED
